@@ -600,9 +600,7 @@ const scoreElement = document.getElementById('score');
 const submitButton = document.getElementById('submitAnswer');
 const nextButton = document.getElementById('nextQuestion');
 
-function displayQuestion() {
-        shuffleArray(cloudComputingQuestions[currentQuestion].options);
-
+function displayQuestion() { 
     questionElement.textContent = cloudComputingQuestions[currentQuestion].question;
     optionsElement.innerHTML = "";
     cloudComputingQuestions[currentQuestion].options.forEach((option, index) => {
