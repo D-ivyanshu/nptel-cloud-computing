@@ -601,6 +601,8 @@ const submitButton = document.getElementById('submitAnswer');
 const nextButton = document.getElementById('nextQuestion');
 
 function displayQuestion() {
+        shuffleArray(cloudComputingQuestions[currentQuestion].options);
+
     questionElement.textContent = cloudComputingQuestions[currentQuestion].question;
     optionsElement.innerHTML = "";
     cloudComputingQuestions[currentQuestion].options.forEach((option, index) => {
