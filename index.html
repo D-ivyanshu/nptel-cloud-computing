@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Computing Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+    }
+    h1 {
+        color: #333;
+    }
+    p {
+        color: #666;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+    #submitAnswer {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        background-color: #6736f9;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .selected {
+        background-color: #eee;
+        border: 2px;
+        color: #333;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } 
+    .footer {
+        margin-top: 120px;
+        color: #666;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Cloud Computing Quiz</h1>
+    <p id="question"></p>
+    <div id="options"></div>
+    <div class="btn-container">
+        <button id="submitAnswer" onclick="checkAnswer()">Submit Answer</button>
+        <button id="nextQuestion" onclick="nextQuestion()" style="display:none;">Next Question</button>
+    </div>
+    <p id="result"></p>
+    <p id="score">Score: 0</p>
+    <div class="footer">Made in majboori 😭 by divyanshu</div>
+</div>
+
+<script>
+    const cloudComputingQuestions = [
+{
+        question: "Utility computing encapsulates which characteristic?",
+        options: ["a) Mobility amalgamation", "b) No impact on resource utilization", "c) Pay-per-use pricing business model", "d) None of the above"],
+        correctAnswer: [2]
+    },
+    {
+        question: "In the context of the client-server architecture: Statement (i) posits that virtualization is a fundamental principle; Statement (ii) claims that the system has limited scalability.",
+        options: ["a) Only Statement (i) is correct", "b) Only Statement (ii) is correct", "c) Both Statements (i) and (ii) are correct", "d) None of the statements is correct"],
+        correctAnswer: [1]
+    },
+    {
+        question: "A cluster is a type of ________ or distributed computing platform consisting of a collection of interconnected stand-alone computing computers working together in a _________computing resource.",
+        options: ["a) computers, parallel", "b) single integrated, parallel", "c) node, parallel", "d) parallel, single integrated"],
+        correctAnswer: [3]
+    },
+    {
+        question: "Dropbox is an example of:",
+        options: ["a) Software as a Service or SaaS", "b) Platform as a Service or PaaS", "c) Function as a Service or FaaS", "d) Infrastructure as a Service or IaaS"],
+        correctAnswer: [0]
+    },
+    {
+        question: "For less data-intensive applications, which elasticity is the ideal solution?",
+        options: ["a) Horizontal scale-out", "b) Vertical scale-up"],
+        correctAnswer: [1]
+    },
+    {
+        question: "The combination of Service-Oriented Infrastructure and Cloud Computing leads to ________.",
+        options: ["a) PaaS", "b) FaaS", "c) Serverless", "d) XaaS"],
+        correctAnswer: [3]
+    },
+    {
+        question: "Utility computing is a service-provisioning model, in which a service provider makes computing resources and infrastructure management available to the customer.",
+        options: ["a) True", "b) False"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Which of the following is false?",
+        options: ["a) Private cloud is dedicated solely to an organization.", "b) Community cloud is a composition of public and private cloud.", "c) Public cloud is available to the general public.", "d) None of these"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Which of the following is one of the characteristics of PaaS?",
+        options: ["a) Provides tools to deploy user applications", "b) Application is provided by the cloud provider", "c) Resources are distributed as a service", "d) None of these"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Which of the following is/are a type of Grid?",
+        options: ["a) Computational Grid", "b) Data Grid", "c) Edge Grid", "d) All of the above"],
+        correctAnswer: [0, 1]
+    },
+    {
+        question: "___________ generally stores the cloud subscriber’s metadata like user credentials and OS images.",
+        options: ["a) SLA (Service Level Agreement)", "b) Cloud Manager", "c) DOS (Data Object storage)", "d) MOS (Metadata Object storage)"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Universal Description, Discovery, and Integration (UDDI) represents a format for data exchange, designed to hold and convey data objects that are made up of pairs of attributes and values.",
+        options: ["a) True", "b) False"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Which factors should an organization consider while planning to deploy an outsourced private cloud?",
+        options: ["a) Only Network Dependency", "b) Only Risks from multi-tenancy", "c) Both Network Dependency and Risks from multi-tenancy", "d) Neither Network Dependency nor Risks from multi-tenancy"],
+        correctAnswer: [2]
+    },
+    {
+        question: "What is/are the main difference(s) between virtualization and dual boot?",
+        options: ["a) In virtualization, both operating systems run simultaneously, but not in dual boot.", "b) In virtualization, operating systems are not isolated from each other, but not in dual boot.", "c) In a dual boot, both operating systems run simultaneously, but not in virtualization.", "d) No difference between dual boot and virtualization."],
+        correctAnswer: [0]
+    },
+    {
+        question: "Web services enhance distributed interoperability through the use of open standards, enabling any two software components to communicate and are designed to address firewall issues.",
+        options: ["a) True", "b) False"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Ubuntu Enterprise Cloud (UEC) is an example of",
+        options: ["a)Public cloud", "b) Hybrid cloud", "c)Private cloud", "d) Community Cloud"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Cloud Manager is the public access point to the cloud where subscribers ______ up for accounts and has a mechanism for ______ subscribers.",
+        options: ["a) sign, integrating", "b) sign, authenticating", "c) sign, accessing", "d) access, authenticating"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Hypervisor is also known as",
+        options: ["a) Cluster Manager", "b) Virtual Machine Handler", "c) Virtual Machine Manager", "d) Virtual Machine Monitor"],
+        correctAnswer: [3]
+    },
+    {
+        question: "Simple Object Access Protocol (SOAP) provides a way to communicate between applications running on different operating systems, with the same technologies and programming languages.",
+        options: ["a) True", "b) False"],
+        correctAnswer: [1]
+    },
+    {
+        question: "While DOM operates on the documents as a whole, _____ parsers operate on each piece of the XML document sequentially.",
+        options: ["a) FTP", "b) MQTT", "c) SAX", "d) XAS"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following statement(s) is/are FALSE for Microsoft Azure Resource Group?",
+        options: ["a) It is a logical container", "b) It manages Azure resources", "c) It deploys web apps, databases, and storage accounts", "d) It is a physical container"],
+        correctAnswer: [3]
+    },
+    {
+        question: "Statement 1: Azure supports public cloud platforms. Statement 2: Azure App Service plan defines security.",
+        options: ["a) Statement 1 is TRUE, Statement 2 is FALSE", "b) Statement 2 is TRUE, Statement 1 is FALSE", "c) Both statements are TRUE", "d) Both statements are FALSE"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Google Cloud Datastore provides flexible object storage with global edge caching.",
+        options: ["a) TRUE", "b) FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Google APIs help to:",
+        options: ["a) scale up the app according to the demand/ service requests.", "b) integrate Google’s services into the application.", "c) migrate the web app to Google Cloud Platform.", "d) None of the above"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Which of the following is/are storage service(s) provided by Google Cloud Platform(GCP)?",
+        options: ["a) Cloud SQL", "b) BigQuery", "c) Cloud Datastore", "d) Cloud Endpoints"],
+        correctAnswer: [0, 2]
+    },
+    {
+        question: "Match the following columns: Column I Column II",
+        options: ["a) A-3, B-2, C-1", "b) A-1, B-2, C-3", "c) A-3, B-1, C-2", "d) A-2, B-1, C-3"],
+        correctAnswer: [0]
+    },
+    {
+        question: "In OpenStack, when a VM is terminated, which of the following memory resources are freed?",
+        options: ["a. Ephemeral storage", "b. Block Storage", "c. Persistent Storage", "d. RAM"],
+        correctAnswer: [0, 3]
+    },
+    {
+        question: "Statement 1: When deploying the Azure app remotely, the login password of the Azure account needs to be entered when the system asks for password. Statement 2: In Microsoft Azure, a deployment user is required for FTP and local Git deployment to a web app.",
+        options: ["A. Statement 1 is True and Statement 2 is False", "B. Statement 1 is False and Statement 2 is True", "C. Both are True", "D. Both are False"],
+        correctAnswer: [1]
+    },
+    {
+        question: "The Azure App pan has a scale count of _____ instances.",
+        options: ["a) 1 to 10", "b) 1 to 100", "c) 1 to 50", "d) 1 to 20"],
+        correctAnswer: [3]
+    },
+    {
+        question: "While developing a web-app using Google App Engine, the development server should not be kept running when changes are made to the source file.",
+        options: ["a) TRUE", "b) FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "____ is a formal contract between a Service Provider (SP) and a Service Consumer (SC).",
+        options: ["A. SLO", "B. SLA", "C. KPI", "D. Utility Premium"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Statement 1: SLA contains SLO. Statement 2: Multiple KPIs are aggregated to SLA.",
+        options: ["A. Statement 1 is TRUE and Statement 2 is FALSE", "B. Statement 2 is TRUE and Statement 1 is FALSE", "C. Both statements are TRUE", "D. Both statements are FALSE"],
+        correctAnswer: [0]
+    },
+    {
+        question: "If demand is flat, the penalty will be linear.",
+        options: ["A. TRUE", "B. FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "What is/are the correct statement(s) regarding VM load management?",
+        options: ["A. When load increases, new VMs should be scheduled to new nodes.", "B. When load decreases, use WOL to start up waiting nodes.", "C. When load increases, use WOL to start up waiting nodes.", "D. When load decreases, live migrate VMs to more utilized nodes."],
+        correctAnswer: [0, 2, 3]
+    },
+    {
+        question: "A company XYZ needs to support a spike in demand when it becomes popular followed potentially by a reduction once some of the visitors turn away. The company has two options to satisfy the requirements which are given in the following table: Expenditure In-house server (INR) Cloud server (INR) Purchase cost 1,80,000 — Cost/hour (over three-year span) — 32 Efficiency 60% 80% Power and cooling (cost/hour) 25 — Management cost (cost/hour) 10 2 Select the correct statement(s) regarding the value(s) of (total-cost/effective-hour) for both the options.",
+        options: ["A. Total-cost / Effective-hour for in-house server is 81.42 INR over three years.", "B. Total-cost / Effective-hour for cloud server is 42 INR.", "C. Total-cost / Effective-hour for in-house server is 46.42 INR over three years.", "D. Total-cost / Effective-hour for cloud server is 40 INR."],
+        correctAnswer: [1, 2]
+    },
+    {
+        question: "A third-party application runs in the cloud for 12 hours/day. At the end of one month [30 days], it was found that the cloud service suffered 5 outages of durations: 1 hour 30 minutes, 30 minutes, 2 hours 15 minutes, 1 hour 45 minutes and T hours, each on different days over the service period. Suppose a cloud guarantees service availability for 97% of time. What are the possible value(s) of T that SLA negotiation gets honored in terms of service availability?",
+        options: ["A. 3 hours", "B. 6 hours", "C. 12 hours", "D. 8 hours"],
+        correctAnswer: [0]
+    },
+    {
+        question: "Which of the following is/are objective(s) of Resource Management?",
+        options: ["A. Increased latency", "B. Scalability", "C. Improved throughput", "D. Improved security"],
+        correctAnswer: [1, 2]
+    },
+    {
+        question: "Which of the following is/are resource allocation approaches in resource management?",
+        options: ["A. Energy-aware resource allocation", "B. Reinforcement learning guided control policy", "C. Network queueing model", "D. Intelligent multi-agent model"],
+        correctAnswer: [0, 3]
+    },
+    {
+        question: "Statement 1: Each reducer groups the results of the map step using different keys and performs a function f on the list of values that correspond to these keys. Statement 2: Files are sorted by a key and stored to the local file system.",
+        options: ["A. Statement 1 is TRUE and Statement 2 is FALSE", "B. Statement 2 is TRUE and Statement 1 is FALSE", "C. Both statements are TRUE", "D. Both statements are FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "In computing, there is a nonlinear relationship between the number of processing cores used and power consumption",
+        options: ["A. TRUE", "B. FALSE"],
+        correctAnswer: [0]
+    },
+    {
+        question: "In which of the following cloud federation architectures, creation of cross‐site networks and cross‐site migration of VMs are used?",
+        options: ["A) Loosely coupled federation", "B) Partially coupled federation", "C) Tightly coupled federation", "D) None of the above"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following is an example of a passive attack?",
+        options: ["A) Replay", "B) Denial of service", "C) Traffic analysis", "D) Masquerade"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following is/are the recovery goal(s) of the security mechanism?",
+        options: ["A) Prevent attackers from violating security policy", "B) Detect attackers’ violation of security policy", "C) Stop attack, assess and repair damage", "D) Continue to function correctly even if attack succeeds"],
+        correctAnswer: [2, 3]
+    },
+    {
+        question: "Statement I: Authorization is the identification of legitimate users. Statement II: Integrity is the protection against data alteration/corruption.",
+        options: ["A) Statement I is TRUE and statement II is FALSE.", "B) Statement I is FALSE and statement II is TRUE.", "C) Both statements are TRUE.", "D) Both statements are FALSE."],
+        correctAnswer: [1]
+    },
+    {
+        question: "Which of the following is/are hypervisor risks associated with rogue hypervisor rootkits?",
+        options: ["A) Vulnerable virtual machine applications like Vmchat, VMftp, Vmcat etc.", "B) Hypervisor that hides itself from normal malware detection systems", "C) Improper configuration of VM.", "D) Hypervisor that creates a covert channel to dump unauthorized code."],
+        correctAnswer: [1, 3]
+    },
+    {
+        question: "Recovery Time Objective (RTO) represents the period of time allowed for the complete execution of the task.",
+        options: ["A) TRUE", "B) FALSE"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following Open-source tools is/are used to perform TCP connect probes on the Amazon EC2 platform?",
+        options: ["A) nmap", "B) wget", "C) ipconfig", "D) hping"],
+        correctAnswer: [1]
+    },
+    {
+        question: "In para virtualization, VMs interact with the host OS.",
+        options: ["A) TRUE", "B) FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "In conflict removal, when is introduction of a virtual role required?",
+        options: ["A) In case of violation of SoD constraint violation.", "B) In case of cyclic inheritance conflict where exactly matched role set exists.", "C) In case of cyclic inheritance conflict where no exactly matched role set exists.", "D) None of the above."],
+        correctAnswer: [3]
+    },
+    {
+        question: "Which of the following is/are key requirement(s) of Mobile Cloud Computing?",
+        options: ["A) Simple APIs offering access to mobile services", "B) Internet access to remotely stored applications in the cloud", "C) Sophisticated APIs requiring knowledge of underlying network technologies", "D) Web interface"],
+        correctAnswer: [1, 2, 4]
+    },
+    {
+        question: "In Mobile Cloud Computing, the synchronizer module collects results of split execution and combines them, and makes the execution details transparent to the user.",
+        options: ["A) TRUE", "B) FALSE"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Geographical distribution of server nodes is _________ in Fog Computing and __________ in Cloud Computing.",
+        options: ["A) Distributed, Centralized", "B) Distributed, Distributed", "C) Centralized, Distributed", "D) Centralized, Centralized"],
+        correctAnswer: [1]
+    },
+    {
+        question: "Formulate the amount of energy saved (E) during offloading for the given data.",
+        options: ["A) E = C2*(k/Sm) - C1*(k/Sc) - C3*(D/B)", "B) E = C1*(k/Sm) - C2*(k/Sc) - C3*(D/B)", "C) E = C3*(k/Sm) - C2*(k/Sc) - C1*(D/B)", "D) E = C1*(k/Sc) - C2*(k/Sm) - C3*(D/B)"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following is/are not a benefit of Fog computing?",
+        options: ["A) Location awareness", "B) Higher latency as compared to cloud computing", "C) Improved QoS", "D) Man-in-the-middle-attack"],
+        correctAnswer: [2, 4]
+    },
+    {
+        question: "Population of a city/town is a static geographic information.",
+        options: ["A)TRUE", "B)FALSE"],
+        correctAnswer: [2]
+    },
+    {
+        question: "Which of the following statement(s) is/are FALSE about Fog Computing?",
+        options: ["A) Intelligence is brought to the cloud from the end users.", "B) Fog computing is used for real-time applications", "C) Fog nodes’ response time is higher than cloud server", "D) Network routers, WiFi Gateways will be capable of running applications"],
+        correctAnswer: [1, 3]
+    },
+    {
+        question: "Fog Computing has ________ number of server nodes and has ________ delay jitter compared to Cloud Computing.",
+        options: ["A) small, higher", "B) large, higher", "C) small, lower", "D) large, lower"],
+        correctAnswer: [4]
+    },
+    {
+        question: "In Geospatial Cloud Models, which level of interoperability ensures the ability to “consume” the information?",
+        options: ["A) Service Level Interoperability", "B) Security Level Interoperability", "C) Data Level Interoperability", "D) None of the above"],
+        correctAnswer: [3]
+    },
+    {
+        question: "Consider the statements and select the correct answer: Statement I: In Geospatial cloud, data services in cloud can be run through IaaS service model. Statement II: Web service is the key technology to provide Geospatial services.",
+        options: ["A) Statement 1 is correct but Statement 2 is incorrect", "B) Statement 2 is correct but Statement 1 is incorrect", "C) Both the statements are correct", "D) Both the statements are incorrect."],
+        correctAnswer: [2]
+    },
+    {
+        question: "Docker compose is a tool for defining and running multi-container Docker applications.",
+        options: ["a) True", "b) False"],
+        correctAnswer: ["a"]
+    },
+    {
+        question: "Choose the most appropriate option. Statement 1: An image is a lightweight, stand-alone, executable package that includes everything to run a piece of software. Statement 2: Container is a run time instance of an image.",
+        options: ["a. Statement 1 is correct but Statement 2 is incorrect", "b. Statement 2 is correct but Statement 1 is incorrect", "c. Both the statements are correct", "d. Both the statements are incorrect."],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "Vehicles providing their networking and data processing capabilities to other vehicles through the cloud comes under which service of IoT-based Vehicular Data Clouds.",
+        options: ["a. SaaS", "b. PaaS", "c. IaaS", "d. None of these"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "An IoT platform’s basic building blocks is/ are (choose the correct option(s)).",
+        options: ["a. Gateway", "b. Images", "c. Network and Cloud", "d. Containers"],
+        correctAnswer: ["a", "c"]
+    },
+    {
+        question: "In the context of Green Cloud Computing, the Power Usage Effectiveness is defined as",
+        options: ["a. Power Delivered / Overall Power", "b. Overall Power / Power Delivered", "c. Overall Power * Power Delivered", "d. None of these"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Statement 1: Sensor-Cloud proxy exposes sensor resources as cloud services. Statement 2: Sensor network is still managed from the Sensor-Cloud Interface via Sensor Network Proxy",
+        options: ["a. Statement 1 is True and Statement 2 is False", "b. Statement 2 is True and Statement 1 is False", "c. Both statements are True", "d. Both statements are False"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "Which of the following statements is/are true about Docker ? Statement 1: Docker hub is used for building docker images and creating docker containers. Statement 2: Docker compose is a registry used to host various docker images.",
+        options: ["a. Statement 1 is correct but Statement 2 is incorrect", "b. Statement 2 is correct but Statement 1 is incorrect", "c. Both the statements are correct", "d. Both the statements are incorrect."],
+        correctAnswer: ["d"]
+    },
+    {
+        question: "Sensor data can be easily shared by different groups of users without any extra effort/ measure.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "___________ get virtual access to host resources through a hypervisor.",
+        options: ["a) Containers", "b) Virtual machines", "c) Both a and b", "d) Images"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "__________ enables different networks, spreads in a huge geographical area to connect together and be employed simultaneously by multiple users on demand.",
+        options: ["a) Serverless", "b) IoT Cloud", "c) Sensor Cloud", "d) Green Cloud"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "In which of the following architectures, two or more partner clouds interoperate to aggregate their resources and provide users with a larger virtual infrastructure?",
+        options: ["A) Hybrid/Bursting Architecture", "B) Aggregated Architecture", "C) Broker Architecture", "D) Multiplier Architecture"],
+        correctAnswer: ["B"]
+    },
+    {
+        question: "Select the correct statement(s) regarding offloading.",
+        options: ["A) Offloading is a technique in which a server, an application, and the associated data are moved from the edge to the cloud.", "B) Offloading augments the computing requirements of individuals or a collection of user devices.", "C) Offloading from cloud to the edge can be achieved by server offloading.", "D) Offloading from user device to edge can be achieved by application partitioning."],
+        correctAnswer: ["B", "C", "D"]
+    },
+    {
+        question: "Fog computing is a model in which data, processing and applications are concentrated in devices at the __________ rather than existing almost entirely in the cloud.",
+        options: ["a. fog", "b. local node", "c. network station", "d. network edge"],
+        correctAnswer: ["d"]
+    },
+    {
+        question: "According to the service placement taxonomy in fog-edge computing, which of the following can be classified as online vs offline?",
+        options: ["A) Control plan design", "B) Placement characteristic", "C) System dynamicity", "D) Mobility support"],
+        correctAnswer: ["B"]
+    },
+    {
+        question: "Fog infrastructure consisting of IoT devices, Fog Nodes, and at least one Cloud Data Center never ensures scalability",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Cloud Federation should prefer maximum geographical separation.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["a"]
+    },
+    {
+        question: "In which of the following cloud federation architectures, creation of cross‐site networks and cross‐site migration of VMs are used?",
+        options: ["A) Loosely coupled federation", "B) Partially coupled federation", "C) Tightly coupled federation", "D) None of the above"],
+        correctAnswer: ["C"]
+    },
+    {
+        question: "What is(are) the application placement constraint(s) for fog nodes?",
+        options: ["a. Network constraints", "b. Interoperability", "c. Resource constraints", "d. None of these"],
+        correctAnswer: ["A", "C"]
+    },
+    {
+        question: "The ___________ used for resource management in fog/edge computing are classified on the basis of data flow, control and tenancy.",
+        options: ["a. Algorithms", "b. Architectures", "c. Hardware", "d. Infrastructure"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "A CSP has little or no control over remote resources in case of",
+        options: ["a. Tightly Coupled Federation", "b. Medium Coupled Federation", "c. Loosely Coupled Federation", "d. None of these"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "Post-copy and Pre-copy migration approaches are employed in :",
+        options: ["a. Live Migration process", "b. Non-live Migration process", "c. Hybrid Migration process", "d. None of these"],
+        correctAnswer: ["a"]
+    },
+    {
+        question: "Kubernetes operates at the hardware level.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "What is(are) the key advantage(s) of Docker?",
+        options: ["a. Facilitating microservices", "b. Modeling networks.", "c. Packaging software", "d. None of these"],
+        correctAnswer: ["a", "b", "c"]
+    },
+    {
+        question: "Which of the following statements is most appropriate about Docker?",
+        options: ["a. Docker is a platform that allows to build and run but not ship apps.", "b. Docker is a platform that allows to build and ship but but not to run apps.", "c. Docker is a platform that allows to build, ship and, run apps.", "d. Docker is a platform that only allows to ship and run but not to build apps."],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "In Docker utility, ___________ is a collection of filesystem layers and some metadata that, if taken together, can be spun up as Docker containers.",
+        options: ["a. Operating System", "b. Microservice", "c. Virtual Machine", "d. Image"],
+        correctAnswer: ["d"]
+    },
+    {
+        question: "Containers are similar to VMs but they have unrelaxed isolation properties to share the operating system among the applications.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Choose the most appropriate option.\nStatement 1: Container is a lightweight virtualization technique.\nStatement 2: Container contains the code and all its dependencies.",
+        options: ["a. Only statement 1 is true", "b. Only statement 2 is true", "c. Both statement 1 and 2 are true", "d. Bothe the statements are false"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "Private Docker registry is a service that stores Docker images.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["a"]
+    },
+    {
+        question: "Docker builds offer enhanced reproducibility and replicability compared to conventional software development approaches.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["a"]
+    },
+    {
+        question: "Given the VM memory size of 1024 GB and the transmission rate of 16 MB/sec, What are the total migration time and downtime for non-live VM migration? Choose the most appropriate option.",
+        options: ["a. 20 hours, 25 hours", "b. 18 hours, 18 hours", "c. 16 hours, 16 hours", "d. 24 hours, 20 hours"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Which of the following options is most appropriate for FaaS ?",
+        options: [
+            "Statement 1: Each function in the FaaS platform gets unlimited execution time.",
+            "Statement 2: Functions are always active and ready for execution."
+        ],
+        correctAnswer: ["d"]
+    },
+    {
+        question: "BigQuery is a fully-managed, serverless data warehouse by ____________.",
+        options: ["a. AWS", "b. Google", "c. Microsoft", "d. IBM"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "_________ are an important distribution mechanism for libraries and custom runtimes in AWS serverless ecosystem.",
+        options: ["a. Runtimes", "b. Lambda Layers", "c. Log streams", "d. None of these"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Which of the following is not a category of research initiative on sustainable cloud computing?",
+        options: ["a. Renewable Energy", "b. Capacity planning", "c. Environment Sandboxing", "d. None of these"],
+        correctAnswer: ["c"]
+    },
+    {
+        question: "AWS S3 is a fully managed proprietary NoSQL database service that supports key–value and document data structures and is offered by Amazon.com as part of the Amazon Web Services portfolio.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Which of the following is/are the goal of sustainable cloud computing? Choose appropriate option(s).",
+        options: [
+            "a. Minimizing the energy consumption.",
+            "b. Increasing reliability of CDCs.",
+            "c. Maximizing carbon footprint related cost.",
+            "d. Increasing network traffic"
+        ],
+        correctAnswer: ["a", "b"]
+    },
+    {
+        question: "Runtimes allows you to annotate your function code with custom logging statements which helps you to analyse the execution flow and performance of your AWS Lambda functions.",
+        options: ["a. True", "b. False"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Serverless covers a wide range of technologies that can be grouped into two categories",
+        options: ["a. BaaS and YaaS", "b. FaaS and BaaS", "c. FaaS and YaaS", "d. None of these"],
+        correctAnswer: ["b"]
+    },
+    {
+        question: "Which of the following is/are challenges in serverless computing ?",
+        options: [
+            "a. Functions sharing code",
+            "b. Asynchronous calls",
+            "c. Adoption of too many technologies",
+            "d. All of the above"
+        ],
+        correctAnswer: ["d"]
+    },
+    {
+        question: "The focus of cloud computing was _________ and the serverless is __________.",
+        options: ["a. programmers, system administrators", "b. system administrators, programmers"],
+        correctAnswer: ["b"]
+    }
+
+
+ 
+]; 
+let currentQuestion = 0;
+let score = 0;
+let selectedOptions = [];
+
+const questionElement = document.getElementById('question');
+const optionsElement = document.getElementById('options');
+const resultElement = document.getElementById('result');
+const feedbackElement = document.getElementById('result');
+const scoreElement = document.getElementById('score');
+const submitButton = document.getElementById('submitAnswer');
+const nextButton = document.getElementById('nextQuestion');
+
+function displayQuestion() {
+    questionElement.textContent = cloudComputingQuestions[currentQuestion].question;
+    optionsElement.innerHTML = "";
+    cloudComputingQuestions[currentQuestion].options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.addEventListener('click', selectOption);
+        button.dataset.index = index; // Store the index of the option
+        optionsElement.appendChild(button);
+    });
+}
+
+function selectOption(event) {
+    const index = parseInt(event.target.dataset.index);
+    const optionIndex = selectedOptions.indexOf(index);
+
+    if (optionIndex === -1) {
+        event.target.classList.add('selected');
+        selectedOptions.push(index);
+    } else {
+        event.target.classList.remove('selected');
+        selectedOptions.splice(optionIndex, 1);
+    }
+}
+
+function checkAnswer() {
+    if (selectedOptions.length === 0) {
+        alert("Please select an option before submitting.");
+        return;
+    }
+
+    const correctAnswer = cloudComputingQuestions[currentQuestion].correctAnswer;
+ 
+    const selectedSet = new Set(selectedOptions);
+    const correctSet = new Set(correctAnswer);
+
+    const isCorrect = (Array.from(selectedSet).sort().join(',') === Array.from(correctSet).sort().join(','));
+  
+    resultElement.textContent = isCorrect ? "Correct! 🎉" : `Incorrect! The correct answer is: ${correctAnswer.map(index => cloudComputingQuestions[currentQuestion].options[index]).join(', ')} Padh le 💀`;
+
+    if (isCorrect) {
+        score++;
+    } else {
+        score--;
+    }
+
+    scoreElement.textContent = `Score: ${score}/${cloudComputingQuestions.length}`;
+
+    selectedOptions = []; // Reset selected options
+
+    submitButton.style.display = 'none'; // Hide submit button after submission
+    nextButton.style.display = 'block'; // Show next button
+}
+
+
+
+function nextQuestion() {
+    currentQuestion++;
+
+    if (currentQuestion < cloudComputingQuestions.length) {
+        displayQuestion();
+        resultElement.textContent = "";
+        submitButton.style.display = 'block'; // Show submit button
+        nextButton.style.display = 'none'; // Hide next button
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    optionsElement.innerHTML = "";
+    questionElement.textContent = "Quiz completed!";
+    resultElement.textContent = `Your final score: ${score}/${cloudComputingQuestions.length}`;
+    scoreElement.textContent = ""; // Hide score element
+    submitButton.style.display = 'none'; // Hide submit button
+    nextButton.style.display = 'none'; // Hide next button
+}
+
+displayQuestion();
+</script>
+</body>
+</html>
